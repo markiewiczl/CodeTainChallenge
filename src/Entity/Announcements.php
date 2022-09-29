@@ -53,6 +53,12 @@ class Announcements
      */
     private $createdAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="announcements")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -138,6 +144,18 @@ class Announcements
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUser(): ?Users
+    {
+        return $this->user;
+    }
+
+    public function setUser(?Users $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

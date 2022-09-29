@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UsersRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -36,6 +38,16 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Announcements::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $announcements;
+
+    public function __construct()
+    {
+        $this->announcements = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -124,5 +136,35 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, Announcements>
+     */
+    public function getAnnouncements(): Collection
+    {
+        return $this->announcements;
+    }
+
+    public function addAnnouncement(Announcements $announcement): self
+    {
+        if (!$this->announcements->contains($announcement)) {
+            $this->announcements[] = $announcement;
+            $announcement->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnnouncement(Announcements $announcement): self
+    {
+        if ($this->announcements->removeElement($announcement)) {
+            // set the owning side to null (unless already changed)
+            if ($announcement->getUser() === $this) {
+                $announcement->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }
