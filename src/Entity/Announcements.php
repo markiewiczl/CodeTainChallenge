@@ -44,7 +44,7 @@ class Announcements
     private $priceGross;
 
     /**
-     * @ORM\Column(type="blob", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $image;
 
