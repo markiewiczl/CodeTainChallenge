@@ -27,3 +27,7 @@ services:
     App\Resolver\FileUploaderResolver:
         arguments:
             $imageDirectory: '%images_directory%'
+
+    App\Controller\DeleteAnnouncementController:
+        arguments:
+            $logger: '@monolog.logger.announcement'
