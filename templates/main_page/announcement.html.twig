@@ -10,11 +10,7 @@
 
 <div class="example-wrapper">
     <ul>
-        {% for announcement in announcements %}
-        <div>
-            <a>1. {{ announcement.description }}</a>
-        </div>
-        {% endfor %}
+        <div>{{ announcement.description }}</div>
     </ul>
 </div>
 {% endblock %}
