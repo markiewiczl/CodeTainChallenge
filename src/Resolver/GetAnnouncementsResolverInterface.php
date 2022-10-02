@@ -11,4 +11,6 @@ interface GetAnnouncementsResolverInterface
     public function getAnnouncementById(int $id): Announcements;
 
     public function getAnnouncementsByCategory(int $categoryId);
+
+    public function getAnnouncementsByColumn(string $order, string $column);
 }

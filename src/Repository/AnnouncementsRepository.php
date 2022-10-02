@@ -39,20 +39,17 @@ class AnnouncementsRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Announcements[] Returns an array of Announcements objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Announcements[] Returns an array of Announcements objects
+     */
+    public function findAllByDate($order, $column): array
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.'. $column, $order)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 //    public function findOneBySomeField($value): ?Announcements
 //    {

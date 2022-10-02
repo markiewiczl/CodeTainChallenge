@@ -30,8 +30,15 @@ class GetAnnouncementsResolver implements GetAnnouncementsResolverInterface
 
     public function getAnnouncementsByCategory(int $categoryId)
     {
-        $announcements = $this->announcementsRepository->findBy(['categoryId' => $categoryId]);
+        $announcements = $this->announcementsRepository->findBy(['id' => $categoryId]);
 
-        return$announcements;
+        return $announcements;
+    }
+
+    public function getAnnouncementsByColumn(string $order, string $column)
+    {
+        $announcements = $this->announcementsRepository->findAllByDate($order, $column);
+
+        return $announcements;
     }
 }

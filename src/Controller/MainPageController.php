@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Resolver\GetAnnouncementsResolverInterface;
+use App\Resolver\GetCategoriesResolverInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,10 +12,14 @@ class MainPageController extends AbstractController
 {
     private GetAnnouncementsResolverInterface $getAnnouncement;
 
-    public function __construct(GetAnnouncementsResolverInterface $getAnnouncement)
+    private GetCategoriesResolverInterface $getCategories;
+
+    public function __construct(GetAnnouncementsResolverInterface $getAnnouncement, GetCategoriesResolverInterface $getCategories)
     {
         $this->getAnnouncement = $getAnnouncement;
+        $this->getCategories = $getCategories;
     }
+
 
     /**
      * @Route("/", name="app_main_page")
@@ -22,16 +27,18 @@ class MainPageController extends AbstractController
     public function index(): Response
     {
         $announcements = $this->getAnnouncement->getAllAnnouncements();
+        $categories = $this->getCategories->getAllCategories();
 
         return $this->render('main_page/index.html.twig', [
             'announcements' => $announcements,
+            'categories' => $categories,
         ]);
     }
 
     /**
      * @Route("/announcement/{id}", name="app_announcement")
      */
-    public function announcementById(int $id)
+    public function announcementById(int $id): Response
     {
         $announcement = $this->getAnnouncement->getAnnouncementById($id);
 
@@ -43,12 +50,22 @@ class MainPageController extends AbstractController
     /**
      * @Route("/announcements/{categoryId}", name="app_announcements")
      */
-    public function announcementByCategory(int $categoryId)
+    public function announcementByCategory(int $categoryId): Response
     {
         $announcement = $this->getAnnouncement->getAnnouncementsByCategory($categoryId);
 
         return $this->render('main_page/announcements.html.twig', [
-            'announcement' => $announcement,
+            'announcements' => $announcement,
         ]);
+    }
+
+    /**
+     * @Route("/announcements/{column}/{order}", name="app_announcements_ordered")
+     */
+    public function announcementsOrdered(string $column, string $order):Response
+    {
+        $announcemetns = $this->getAnnouncement->getAnnouncementsByColumn($order, $column);
+
+        dd($announcemetns);
     }
 }
