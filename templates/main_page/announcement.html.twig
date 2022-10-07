@@ -3,14 +3,20 @@
 {% block title %}Hello MainPageController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="ann__item card">
+        <div class="ann__first">
+            {% if announcement.image is same as null %}
+            <img src="{{ asset('uploads/images/noimg.jpg') }}" class="ann__img">
+            {% else %}
+            <img src="{{ asset('uploads/images/' ~ announcement.image) }}" class="ann__img">
+            {% endif %}
+            <span class="ann__title">{{ announcement.title }}</span>
+            <span class="ann__text">{{ announcement.priceGross }} zł</span>
+        </div>
 
-<div class="example-wrapper">
-    <ul>
-            <img src="{{ asset('uploads/images/'~announcement.image) }}">
-    </ul>
-</div>
+        <div class="ann__second"><span class="ann__text">{{ announcement.description }}</span></div>
+        <div class="ann__buttons">
+            <a class="btn btn-outline-secondary" href="{{ path('app_delete_announcement', {'id': announcement.id}) }}">Usuń</a>
+        </div>
+    </div>
 {% endblock %}

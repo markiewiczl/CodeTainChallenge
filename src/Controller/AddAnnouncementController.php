@@ -7,6 +7,7 @@ use App\Form\AddAnnouncementType;
 use App\Resolver\FileUploaderResolverInterface;
 use App\Resolver\GetUserResolverInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,6 +29,9 @@ class AddAnnouncementController extends AbstractController
     }
 
     /**
+     * Require ROLE_USER for all the actions of this controller
+     *
+     * @IsGranted("ROLE_USER")
      * @Route("/add/announcement", name="app_add_announcement")
      */
     public function index(Request $request): Response
@@ -50,6 +54,7 @@ class AddAnnouncementController extends AbstractController
 
             /** @var Announcements $announcement */
             $announcement = $form->getData();
+            $announcement->setPriceNet($form->get('priceNet')->getData() * 100);
             $announcement->setPriceGross($announcement->getPriceNet()*1.23);
             $announcement->setCreatedAt(new \DateTime('now'));
 

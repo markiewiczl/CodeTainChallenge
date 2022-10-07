@@ -41,9 +41,11 @@ class MainPageController extends AbstractController
     public function announcementById(int $id): Response
     {
         $announcement = $this->getAnnouncement->getAnnouncementById($id);
+        $categories = $this->getCategories->getAllCategories();
 
         return $this->render('main_page/announcement.html.twig', [
            'announcement' => $announcement,
+           'categories' => $categories,
         ]);
     }
 
@@ -53,9 +55,11 @@ class MainPageController extends AbstractController
     public function announcementByCategory(int $categoryId): Response
     {
         $announcement = $this->getAnnouncement->getAnnouncementsByCategory($categoryId);
+        $categories = $this->getCategories->getAllCategories();
 
         return $this->render('main_page/announcements.html.twig', [
             'announcements' => $announcement,
+            'categories' => $categories,
         ]);
     }
 
@@ -65,7 +69,11 @@ class MainPageController extends AbstractController
     public function announcementsOrdered(string $column, string $order):Response
     {
         $announcemetns = $this->getAnnouncement->getAnnouncementsByColumn($order, $column);
+        $categories = $this->getCategories->getAllCategories();
 
-        dd($announcemetns);
+        return $this->renderForm('main_page/ordered_announcements.html.twig', [
+            'announcements' => $announcemetns,
+            'categories' => $categories,
+        ]);
     }
 }

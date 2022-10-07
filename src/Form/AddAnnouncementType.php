@@ -38,12 +38,12 @@ class AddAnnouncementType extends AbstractType
                         'mimeTypes' => [
                             'image/*',
                         ],
-                        'mimeTypesMessage' => 'Proszę wybrać plik z rozszerzeniem jpg, jpeg lub png'
+                        'mimeTypesMessage' => 'Nie poprawne rozszerzenie pliku'
                     ])
                 ]
             ])
             ->add('category', EntityType::class, [
-                'label' => 'Categoria',
+                'label' => 'Kategoria',
                 'class' => Categories::class,
                 'choice_label' => 'name',
             ])

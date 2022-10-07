@@ -66,6 +66,7 @@ class AppFixtures extends Fixture
         $announcement1->setTitle('Opel');
         $announcement1->setPriceNet(3000000);
         $announcement1->setPriceGross($announcement1->getPriceNet()*1.23);
+        $announcement1->setImage('opel.jpeg');
 
         $announcement2 = new Announcements();
         $announcement2->setUser($user1);
@@ -84,6 +85,7 @@ class AppFixtures extends Fixture
         $announcement3->setTitle('Telefon');
         $announcement3->setPriceNet(200000);
         $announcement3->setPriceGross($announcement3->getPriceNet()*1.23);
+        $announcement3->setImage('telefon.jpeg');
 
         $announcement4 = new Announcements();
         $announcement4->setUser($user2);
@@ -111,6 +113,7 @@ class AppFixtures extends Fixture
         $announcement6->setTitle('Piłka Gucci');
         $announcement6->setPriceNet(30000000);
         $announcement6->setPriceGross($announcement6->getPriceNet()*1.23);
+        $announcement6->setImage('piłka.jpeg');
 
         $announcement7 = new Announcements();
         $announcement7->setUser($user4);
@@ -120,6 +123,7 @@ class AppFixtures extends Fixture
         $announcement7->setTitle('huśtawka');
         $announcement7->setPriceNet(21000);
         $announcement7->setPriceGross($announcement7->getPriceNet()*1.23);
+        $announcement7->setImage('huśtawka.jpeg');
 
         $announcement8 = new Announcements();
         $announcement8->setUser($user4);
@@ -129,7 +133,7 @@ class AppFixtures extends Fixture
         $announcement8->setTitle('Bentley');
         $announcement8->setPriceNet(120000000);
         $announcement8->setPriceGross($announcement8->getPriceNet()*1.23);
-//        $announcement8->setImage();
+        $announcement8->setImage('bentley.jpeg');
 
         $manager->persist($admin);
         $manager->persist($user1);
