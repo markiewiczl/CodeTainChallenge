@@ -6,23 +6,23 @@
             <h5 class="ann__text">Kategorie</h5>
             <div class="ann__category">
                 {% for category in categories %}
-                    <a href="{{ path('app_announcements', { 'categoryId': category.id }) }}" class="main__link">
+                    <a href="{{ path('app_announcements', { 'categoryId': category.id, 'currency': currency }) }}" class="main__link">
                         <i class="fa-solid fa-chevron-right"></i>{{ category.name }}
                     </a><br>
                 {% endfor %}
-                <a href="{{ path('app_announcements_ordered', {'column': 'createdAt', 'order': 'DESC'}) }}" class="main__link">
+                <a href="{{ path('app_announcements_ordered', {'column': 'createdAt', 'order': 'DESC', 'currency': currency}) }}" class="main__link">
                     <i class="fa-solid fa-chevron-right"></i>Data dodania- malejąco
                 </a><br>
-                <a href="{{ path('app_announcements_ordered', {'column': 'createdAt', 'order': 'ASC'}) }}" class="main__link">
+                <a href="{{ path('app_announcements_ordered', {'column': 'createdAt', 'order': 'ASC', 'currency': currency}) }}" class="main__link">
                     <i class="fa-solid fa-chevron-right"></i>Data dodania- rosnąco
                 </a><br>
-                <a href="{{ path('app_announcements_ordered', {'column': 'priceGross', 'order': 'DESC'}) }}" class="main__link">
+                <a href="{{ path('app_announcements_ordered', {'column': 'priceGross', 'order': 'DESC', 'currency': currency}) }}" class="main__link">
                     <i class="fa-solid fa-chevron-right"></i>Cena- malejąco
                 </a><br>
-                <a href="{{ path('app_announcements_ordered', {'column': 'priceGross', 'order': 'ASC'}) }}" class="main__link">
+                <a href="{{ path('app_announcements_ordered', {'column': 'priceGross', 'order': 'ASC', 'currency': currency}) }}" class="main__link">
                     <i class="fa-solid fa-chevron-right"></i>Cena- rosnąco
                 </a><br>
-                <a href="{{ path('app_main_page') }}" class="main__link">
+                <a href="{{ path('app_main_page', {'currency': currency}) }}" class="main__link">
                     <i class="fa-solid fa-chevron-right"></i>&nbsp;Resetuj
                 </a><br>
             </div>
@@ -33,11 +33,11 @@
                 <div class="ann__item card">
                     <div class="ann__first">
                         <span class="ann__title">{{ announcement.title }}</span>
-                        <span class="ann__text">{{ announcement.priceGross * 0.01}} zł</span>
+                        <span class="ann__text">{{ announcement.priceGross * 0.01}} {{ currency }}</span>
                     </div>
                     <br>
                     <div class="ann__buttons">
-                        <a class="btn btn-outline-secondary" href="{{ path('app_announcement', {'id': announcement.id}) }}">Pokaż</a>
+                        <a class="btn btn-outline-secondary" href="{{ path('app_announcement', {'id': announcement.id, 'currency': currency}) }}">Pokaż</a>
                     </div>
                 </div>
             {% endfor %}

@@ -1,6 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block navbar %}
+    <div class="navbar" id="navbar">
+    <div class="navbar__card">
+        <a id="Timer"></a><br>
+        <a href="{{ path('app_main_page') }}" class="card">Strona główna</a>
+    </div>
+    <div class="navbar__logon">
+        {% if app.user is not same as null %}
+            <a   class="navbar__logon-item" href="{{ path('app_add_announcement') }}">Dodaj ogłoszenie</a>
+            <a   class="navbar__logon-item" href="{{ path('app_logout') }}">Wyloguj</a>
+        {% else %}
+            <a class="navbar__logon-item" href="{{ path('app_login') }}">Zaloguj</a>
+            <a class="navbar__logon-item" href="{{ path('app_register') }}">Rejestracja</a>
+        {% endif %}
+    </div>
+    </div>
+{% endblock %}
 
 {% block body %}
     <div class="card w-30 content">

@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MainPageController!{% endblock %}
-
 {% block body %}
     <div class="ann__item card">
         <div class="ann__first">
@@ -11,7 +9,7 @@
             <img src="{{ asset('uploads/images/' ~ announcement.image) }}" class="ann__img">
             {% endif %}
             <span class="ann__title">{{ announcement.title }}</span>
-            <span class="ann__text">{{ announcement.priceGross }} zł</span>
+            <span class="ann__text">{{ announcement.priceGross * 0.01 }} {{ currency }}</span>
         </div>
 
         <div class="ann__second"><span class="ann__text">{{ announcement.description }}</span></div>

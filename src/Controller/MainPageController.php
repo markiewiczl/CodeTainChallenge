@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Resolver\ConvertToCurrentCurrencyResolverInterface;
 use App\Resolver\GetAnnouncementsResolverInterface;
 use App\Resolver\GetCategoriesResolverInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,66 +15,88 @@ class MainPageController extends AbstractController
 
     private GetCategoriesResolverInterface $getCategories;
 
-    public function __construct(GetAnnouncementsResolverInterface $getAnnouncement, GetCategoriesResolverInterface $getCategories)
+    private ConvertToCurrentCurrencyResolverInterface $currencyResolver;
+
+    public function __construct(GetAnnouncementsResolverInterface $getAnnouncement, GetCategoriesResolverInterface $getCategories, ConvertToCurrentCurrencyResolverInterface $currencyResolver)
     {
         $this->getAnnouncement = $getAnnouncement;
         $this->getCategories = $getCategories;
+        $this->currencyResolver = $currencyResolver;
     }
 
-
     /**
-     * @Route("/", name="app_main_page")
+     * @Route("/announcements/{currency}", name="app_main_page", defaults={"currency"="pln"})
      */
-    public function index(): Response
+    public function index(string $currency): Response
     {
         $announcements = $this->getAnnouncement->getAllAnnouncements();
         $categories = $this->getCategories->getAllCategories();
 
+        if($currency === 'eur') {
+            $this->currencyResolver->convert($announcements);
+        }
+
         return $this->render('main_page/index.html.twig', [
             'announcements' => $announcements,
             'categories' => $categories,
+            'currency' => $currency,
         ]);
     }
 
     /**
-     * @Route("/announcement/{id}", name="app_announcement")
+     * @Route("/{currency}/announcement/{id}", name="app_announcement", defaults={"currency" = "pln"})
      */
-    public function announcementById(int $id): Response
+    public function announcementById(int $id, string $currency): Response
     {
         $announcement = $this->getAnnouncement->getAnnouncementById($id);
         $categories = $this->getCategories->getAllCategories();
 
+        if($currency === 'eur') {
+            $this->currencyResolver->convertOne($announcement);
+        }
+
         return $this->render('main_page/announcement.html.twig', [
            'announcement' => $announcement,
            'categories' => $categories,
+            'currency' => $currency,
         ]);
     }
 
     /**
-     * @Route("/announcements/{categoryId}", name="app_announcements")
+     * @Route("/{currency}/announcements/{categoryId}", name="app_announcements", defaults={"currency"="pln"})
      */
-    public function announcementByCategory(int $categoryId): Response
+    public function announcementByCategory(int $categoryId, string $currency): Response
     {
-        $announcement = $this->getAnnouncement->getAnnouncementsByCategory($categoryId);
+        $announcements = $this->getAnnouncement->getAnnouncementsByCategory($categoryId);
         $categories = $this->getCategories->getAllCategories();
 
+        if($currency === 'eur') {
+            $this->currencyResolver->convert($announcements);
+        }
+
         return $this->render('main_page/announcements.html.twig', [
-            'announcements' => $announcement,
+            'announcements' => $announcements,
             'categories' => $categories,
+            'currency' => $currency,
         ]);
     }
 
     /**
-     * @Route("/announcements/{column}/{order}", name="app_announcements_ordered")
+     * @Route("/{currency}/announcements/{column}/{order}", name="app_announcements_ordered", defaults={"currency"="pln"})
      */
-    public function announcementsOrdered(string $column, string $order):Response
+    public function announcementsOrdered(string $column, string $order, string $currency):Response
     {
         $announcemetns = $this->getAnnouncement->getAnnouncementsByColumn($order, $column);
         $categories = $this->getCategories->getAllCategories();
 
+        if($currency === 'eur') {
+            $this->currencyResolver->convert($announcemetns);
+        }
+
         return $this->renderForm('main_page/ordered_announcements.html.twig', [
             'announcements' => $announcemetns,
             'categories' => $categories,
+            'currency' => $currency,
         ]);
     }
 }

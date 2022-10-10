@@ -11,10 +11,17 @@
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
     <body>
+    {% block navbar %}
     <div class="navbar" id="navbar">
         <div class="navbar__card">
             <a id="Timer"></a><br>
-            <a href="{{ path('app_main_page') }}" class="card">Strona główna</a>
+            {% if currency is not same as 'pln' %}
+            <a href="{{ path('app_main_page', {'currency': currency }) }}" class="card">Strona główna</a>
+            <a href="{{ path('app_main_page', {'currency': 'pln' }) }}" class="card">Przewalutuj na: Pln</a>
+            {% else %}
+            <a href="{{ path('app_main_page', {'currency': currency }) }}" class="card">Strona główna</a>
+            <a href="{{ path('app_main_page', {'currency': 'eur'}) }}" class="card">Przewalutuj na: Euro</a>
+            {% endif %}
         </div>
         <div class="navbar__logon">
             {% if app.user is not same as null %}
@@ -26,6 +33,7 @@
             {% endif %}
         </div>
     </div>
+    {% endblock %}
     <div class="content">
     {% block body %}{% endblock %}
     </div>
