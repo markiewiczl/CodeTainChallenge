@@ -1,0 +1,69 @@
+@import './variables.scss';
+@import "~bootstrap/scss/bootstrap";
+@import './ann.scss';
+
+html{
+  width:100%;
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  width:100%;
+  margin: 0 auto;
+  padding:0;
+}
+
+a {
+  text-decoration:none;
+  color: $base-color;
+  &:hover,&:focus, &:visited{
+    text-decoration:none;
+    color: black;
+  }
+}
+
+.content{
+  width: 100%;
+  padding: 3vw;
+  font-size: 1em;
+}
+
+.navbar{
+  width: 100%;
+  height: 5vh;
+  display: flex;
+  background: #ff641c;
+  flex-direction: row;
+  margin: 0;
+  padding: 0 2vw;
+  &__card{
+    width: 10vw;
+    height: 2vh;
+    background: yellow;
+    color: black;
+    border-radius: 5%;
+    text-align: center;
+  }
+  &__logon{
+    font-size: 1rem;
+    display: flex;
+    height: 8vh;
+    width: 20vw;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-start !important;
+    &-item{
+      padding: 1.4vh 1vw;
+    }
+  }
+}
+
+.main{
+  &__link{
+    color: $base-color;
+    &:visited, &:focus{
+      color: $base-color;
+    }
+  }
+}

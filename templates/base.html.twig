@@ -1,19 +1,58 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
+        <title>Ale_egro</title>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     </head>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
     <body>
-        {% block body %}{% endblock %}
+    {% block navbar %}
+    <div class="navbar" id="navbar">
+        <div class="navbar__card">
+            <a id="Timer"></a><br>
+            {% if currency is not same as 'pln' %}
+            <a href="{{ path('app_main_page', {'currency': currency }) }}" class="card">Strona główna</a>
+            <a href="{{ path('app_main_page', {'currency': 'pln' }) }}" class="card">Przewalutuj na: Pln</a>
+            {% else %}
+            <a href="{{ path('app_main_page', {'currency': currency }) }}" class="card">Strona główna</a>
+            <a href="{{ path('app_main_page', {'currency': 'eur'}) }}" class="card">Przewalutuj na: Euro</a>
+            {% endif %}
+        </div>
+        <div class="navbar__logon">
+            {% if app.user is not same as null %}
+                <a   class="navbar__logon-item" href="{{ path('app_add_announcement') }}">Dodaj ogłoszenie</a>
+                <a   class="navbar__logon-item" href="{{ path('app_logout') }}">Wyloguj</a>
+            {% else %}
+                <a class="navbar__logon-item" href="{{ path('app_login') }}">Zaloguj</a>
+                <a class="navbar__logon-item" href="{{ path('app_register') }}">Rejestracja</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endblock %}
+    <div class="content">
+    {% block body %}{% endblock %}
+    </div>
     </body>
+    <script>
+        function getData() {
+            $.get("http://api.nbp.pl/api/exchangerates/rates/A/EUR", (data) => {
+                $("#Timer").empty();
+                let items = [];
+                $.each(data["rates"], (key, val) => {
+                    items.push('Kurs: ' + data['code'] + ": " + val['mid']);
+                });
+                $("#Timer").html(items);
+            });
+
+        }
+
+        getData();
+
+        window.setInterval(getData, 300000);
+    </script>
 </html>

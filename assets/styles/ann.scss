@@ -1,0 +1,53 @@
+.ann{
+  &__content{
+    padding:1vh;
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+  }
+  &__container{
+    overflow:auto;
+    height: 60vh;
+    width: 65vw;
+    text-align:center;
+  }
+  &__categories{
+    width: 15vw;
+    overflow:auto;
+    height: 60vh;
+    border-radius: 5px;
+    padding: 1vh;
+    margin-right: 1vh;
+  }
+  &__category{
+    padding: 0.5vh;
+  }
+  &__item{
+    border-radius: 5px;
+    padding: 1vh;
+    margin-bottom:1vh;
+    margin-right: 1vh;
+  }
+  &__buttons{
+    font-size: 1.5rem;
+    justify-content: space-around;
+  }
+  &__title{
+    color: orange;
+    a {
+      color: orange;
+    }
+  }
+  &__text{
+    color: gray;
+  }
+  &__first{
+    justify-content: space-between;
+    font-weight: 500;
+    font-size: 2rem;
+    text-align: left;
+  }
+  &__img{
+    height: 20vh !important;
+  }
+}

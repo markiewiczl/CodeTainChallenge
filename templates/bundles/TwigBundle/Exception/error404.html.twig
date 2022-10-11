@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Nie masz wystarczających uprawnień</h1>
+
+    <p>
+        Nie masz uprawnień by otworzyć podaną stronę. <a href="{{ path('app_main_page') }}">Wróć na stronę główną</a>.
+    </p>
+{% endblock %}

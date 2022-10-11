@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block navbar %}
+    <div class="navbar" id="navbar">
+    <div class="navbar__card">
+        <a id="Timer"></a><br>
+            <a href="{{ path('app_main_page') }}" class="card">Strona główna</a>
+    </div>
+    <div class="navbar__logon">
+        {% if app.user is not same as null %}
+            <a   class="navbar__logon-item" href="{{ path('app_add_announcement') }}">Dodaj ogłoszenie</a>
+            <a   class="navbar__logon-item" href="{{ path('app_logout') }}">Wyloguj</a>
+        {% else %}
+            <a class="navbar__logon-item" href="{{ path('app_login') }}">Zaloguj</a>
+            <a class="navbar__logon-item" href="{{ path('app_register') }}">Rejestracja</a>
+        {% endif %}
+    </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="card content example-wrapper">
+    {{ form(form) }}
+</div>
+{% endblock %}

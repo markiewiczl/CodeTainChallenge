@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block navbar %}
+    <div class="navbar" id="navbar">
+    <div class="navbar__card">
+        <a id="Timer"></a><br>
+        <a href="{{ path('app_main_page') }}" class="card">Strona główna</a>
+    </div>
+    <div class="navbar__logon">
+        {% if app.user is not same as null %}
+            <a   class="navbar__logon-item" href="{{ path('app_add_announcement') }}">Dodaj ogłoszenie</a>
+            <a   class="navbar__logon-item" href="{{ path('app_logout') }}">Wyloguj</a>
+        {% else %}
+            <a class="navbar__logon-item" href="{{ path('app_login') }}">Zaloguj</a>
+            <a class="navbar__logon-item" href="{{ path('app_register') }}">Rejestracja</a>
+        {% endif %}
+    </div>
+    </div>{% endblock %}
+
+{% block body %}
+    <div class="card content">
+    {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+        <h1>Login</h1>
+
+<form action="{{ path('app_login') }}" method="post">
+    <label for="username">Email:</label>
+    <input type="text" id="username" name="_username" value="{{ last_username }}"/>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="_password"/>
+
+    {# If you want to control the URL the user is redirected to on success
+        <input type="hidden" name="_target_path" value="/account"/> #}
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+    <button type="submit">login</button>
+</form>
+    </div>
+{% endblock %}

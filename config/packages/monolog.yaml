@@ -4,7 +4,13 @@ monolog:
 
 when@dev:
     monolog:
+        channels: ['announcement']
         handlers:
+            announcement:
+                level: debug
+                type: stream
+                path: "%kernel.logs_dir%/announcement.log"
+                channels: [announcement]
             main:
                 type: stream
                 path: "%kernel.logs_dir%/%kernel.environment%.log"

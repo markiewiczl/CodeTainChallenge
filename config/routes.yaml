@@ -1,3 +1,43 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+app_main_page:
+    path: /{currency}
+    controller: App\Controller\MainPageController::index
+    defaults:
+      currency: pln
+
+app_add_announcement:
+  path: /add/announcement
+  controller: App\Controller\AddAnnouncementController::index
+
+app_announcement:
+  path: /announcement/{currency}/{id}
+  controller: App\Controller\MainPageController::announcementById
+  defaults:
+    currency: pln
+
+app_announcements:
+  path: /{currency}/announcements/{categoryId}
+  controller: App\Controller\MainPageController::announcementByCategory
+  defaults:
+    currency: pln
+
+app_announcements_ordered:
+  path: /{currency}/announcements/{column}/{order}
+  controller: App\Controller\MainPageController::announcementsOrdered
+  defaults:
+    currency: pln
+
+app_register:
+  path: /user/register
+  controller: App\Controller\RegistrationController::register
+
+app_delete_announcement:
+  path: /delete/announcement:{id}
+  controller: App\Controller\DeleteAnnouncementController::index
+
+app_logout:
+  path: /user/logout
+  methods: GET
+
+app_login:
+  path: /user/login
+  controller: App\Controller\LoginController::index
