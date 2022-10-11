@@ -21,19 +21,17 @@ class AddAnnouncementController extends AbstractController
 
     private FileUploaderResolverInterface $fileUploader;
 
-    public function __construct(GetUserResolverInterface $getUser, EntityManagerInterface $entityManager, FileUploaderResolverInterface $fileUploader)
+    public function __construct(
+        GetUserResolverInterface $getUser,
+        EntityManagerInterface $entityManager,
+        FileUploaderResolverInterface $fileUploader
+    )
     {
         $this->getUser = $getUser;
         $this->entityManager = $entityManager;
         $this->fileUploader = $fileUploader;
     }
 
-    /**
-     * Require ROLE_USER for all the actions of this controller
-     *
-     * @IsGranted("ROLE_USER")
-     * @Route("/add/announcement", name="app_add_announcement")
-     */
     public function index(Request $request): Response
     {
         $announcement = new Announcements();

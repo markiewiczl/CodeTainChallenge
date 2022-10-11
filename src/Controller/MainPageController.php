@@ -2,37 +2,37 @@
 
 namespace App\Controller;
 
+use App\Repository\AnnouncementsRepository;
+use App\Repository\CategoriesRepository;
 use App\Resolver\ConvertToCurrentCurrencyResolverInterface;
-use App\Resolver\GetAnnouncementsResolverInterface;
-use App\Resolver\GetCategoriesResolverInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 class MainPageController extends AbstractController
 {
-    private GetAnnouncementsResolverInterface $getAnnouncement;
+    private AnnouncementsRepository $announcementsRepository;
 
-    private GetCategoriesResolverInterface $getCategories;
+    private CategoriesRepository $categoriesRepository;
 
     private ConvertToCurrentCurrencyResolverInterface $currencyResolver;
 
-    public function __construct(GetAnnouncementsResolverInterface $getAnnouncement, GetCategoriesResolverInterface $getCategories, ConvertToCurrentCurrencyResolverInterface $currencyResolver)
+    public function __construct(
+        AnnouncementsRepository $announcementsRepository,
+        CategoriesRepository $categoriesRepository,
+        ConvertToCurrentCurrencyResolverInterface $currencyResolver
+    )
     {
-        $this->getAnnouncement = $getAnnouncement;
-        $this->getCategories = $getCategories;
+        $this->announcementsRepository = $announcementsRepository;
+        $this->categoriesRepository = $categoriesRepository;
         $this->currencyResolver = $currencyResolver;
     }
 
-    /**
-     * @Route("/announcements/{currency}", name="app_main_page", defaults={"currency"="pln"})
-     */
     public function index(string $currency): Response
     {
-        $announcements = $this->getAnnouncement->getAllAnnouncements();
-        $categories = $this->getCategories->getAllCategories();
+        $announcements = $this->announcementsRepository->findAll();
+        $categories = $this->categoriesRepository->findAll();
 
-        if($currency === 'eur') {
+        if ($currency === 'eur') {
             $this->currencyResolver->convert($announcements);
         }
 
@@ -43,15 +43,12 @@ class MainPageController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{currency}/announcement/{id}", name="app_announcement", defaults={"currency" = "pln"})
-     */
     public function announcementById(int $id, string $currency): Response
     {
-        $announcement = $this->getAnnouncement->getAnnouncementById($id);
-        $categories = $this->getCategories->getAllCategories();
+        $announcement = $this->announcementsRepository->findOneBy(['id' => $id]);
+        $categories = $this->categoriesRepository->findAll();
 
-        if($currency === 'eur') {
+        if ($currency === 'eur') {
             $this->currencyResolver->convertOne($announcement);
         }
 
@@ -62,15 +59,12 @@ class MainPageController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{currency}/announcements/{categoryId}", name="app_announcements", defaults={"currency"="pln"})
-     */
     public function announcementByCategory(int $categoryId, string $currency): Response
     {
-        $announcements = $this->getAnnouncement->getAnnouncementsByCategory($categoryId);
-        $categories = $this->getCategories->getAllCategories();
+        $announcements = $this->announcementsRepository->findBy(['category' => $categoryId]);
+        $categories = $this->categoriesRepository->findAll();
 
-        if($currency === 'eur') {
+        if ($currency === 'eur') {
             $this->currencyResolver->convert($announcements);
         }
 
@@ -81,20 +75,18 @@ class MainPageController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{currency}/announcements/{column}/{order}", name="app_announcements_ordered", defaults={"currency"="pln"})
-     */
-    public function announcementsOrdered(string $column, string $order, string $currency):Response
+    public function announcementsOrdered(string $column, string $order, string $currency): Response
     {
-        $announcemetns = $this->getAnnouncement->getAnnouncementsByColumn($order, $column);
-        $categories = $this->getCategories->getAllCategories();
+        $announcements = $this->announcementsRepository->orderByColumn($order, $column);
+        $categories = $this-> categoriesRepository->findAll();
+        ;
 
-        if($currency === 'eur') {
-            $this->currencyResolver->convert($announcemetns);
+        if ($currency === 'eur') {
+            $this->currencyResolver->convert($announcements);
         }
 
         return $this->renderForm('main_page/ordered_announcements.html.twig', [
-            'announcements' => $announcemetns,
+            'announcements' => $announcements,
             'categories' => $categories,
             'currency' => $currency,
         ]);

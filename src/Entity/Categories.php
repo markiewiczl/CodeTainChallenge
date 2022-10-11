@@ -12,22 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Categories
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    private int $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
+    private string $name;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Announcements::class, mappedBy="category")
-     */
-    private $announcements;
+    private Collection $announcements;
 
     public function __construct()
     {
@@ -51,9 +40,6 @@ class Categories
         return $this;
     }
 
-    /**
-     * @return Collection<int, Announcements>
-     */
     public function getAnnouncements(): Collection
     {
         return $this->announcements;

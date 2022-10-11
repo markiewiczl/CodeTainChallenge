@@ -47,7 +47,9 @@ class AddAnnouncementType extends AbstractType
                 'class' => Categories::class,
                 'choice_label' => 'name',
             ])
-            ->add('Zapisz', SubmitType::class)
+            ->add('submit', SubmitType::class, [
+                'label' => 'Zapisz',
+            ])
         ;
     }
 

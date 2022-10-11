@@ -15,10 +15,10 @@ class GetExchangeRate implements GetExchangeRateInterface
 
     public function getEuroExchangeRate(): float
     {
-            $response = $this->client->request(
-                'GET',
-                'http://api.nbp.pl/api/exchangerates/rates/a/eur'
-            );
+        $response = $this->client->request(
+            'GET',
+            'http://api.nbp.pl/api/exchangerates/rates/a/eur'
+        );
 
         $statusCode = $response->getStatusCode();
         $contentType = $response->getHeaders()['content-type'][0];

@@ -10,54 +10,23 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Announcements
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    private int $id;
 
-    /**
-     * @ORM\Column(type="string", length=128)
-     */
-    private $title;
+    private string $title;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $description;
+    private string $description;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="announcements")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $category;
+    private Categories $category;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $priceNet;
+    private int $priceNet;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $priceGross;
+    private int $priceGross;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $image;
+    private ?string $image;
 
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $createdAt;
+    private \DateTimeInterface $createdAt;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="announcements")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
+    private Users $user;
 
     public function getId(): ?int
     {

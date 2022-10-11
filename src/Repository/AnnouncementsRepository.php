@@ -42,7 +42,7 @@ class AnnouncementsRepository extends ServiceEntityRepository
     /**
      * @return Announcements[] Returns an array of Announcements objects
      */
-    public function findAllByDate($order, $column): array
+    public function orderByColumn($order, $column): array
     {
         return $this->createQueryBuilder('a')
             ->orderBy('a.'. $column, $order)
@@ -50,14 +50,4 @@ class AnnouncementsRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
-//    public function findOneBySomeField($value): ?Announcements
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }
